@@ -11,6 +11,7 @@
 #import "TwitterClient.h"
 #import "User.h"
 #import "Tweet.h"
+#import "TweetsViewController.h"
 
 @interface AppDelegate ()
 
@@ -22,10 +23,26 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController = [[LoginViewController alloc] init];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidLogout) name:UserDidLogoutNotification object:nil];
+
+    User *user = [User currentUser];
+    // Check if user is already logged in. Show Tweets if so, Show Login if not.
+    if (user != nil) {
+        self.window.rootViewController = [[TweetsViewController alloc] init];
+        NSLog(@"Welcome %@! Already logged in.", user.name);
+    } else {
+        self.window.rootViewController = [[LoginViewController alloc] init];
+        NSLog(@"Not logged in");
+    }
+
     [self.window makeKeyAndVisible];
 
     return YES;
+}
+
+- (void)userDidLogout {
+    self.window.rootViewController = [[LoginViewController alloc] init];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

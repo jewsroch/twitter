@@ -7,6 +7,7 @@
 //
 
 #import "TwitterClient.h"
+#import "Tweet.h"
 
 NSString * const kTwitterConsumerKey = @"EIkIJBIMmmdZj5P6grMzJAc3z";
 NSString * const kTwitterConsumerSecret = @"t8RgUNlYHltog3x3TG1fhOnP0V6bm5ZM2Fwomim65QxWNt7uvw";
@@ -45,6 +46,7 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
     // Step 1: Fetch OAUTH Request Token from Twitter API
     // callbackURL includes app-specific protocol so redirect will open in our app.
     // That is set in the Project > Info > URL Types settings page.
+
     [self fetchRequestTokenWithPath:@"oauth/request_token" method:@"GET" callbackURL:[NSURL URLWithString:@"cjtwitterapp://oauth"] scope:nil success:^(BDBOAuth1Credential *requestToken) {
 
         // Step 2: (If successfully requested token) -- Navigate to authorization URL (on Twitter).
@@ -79,6 +81,10 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
 
             // Create user model from the response
             User *user = [[User alloc] initWithDictionary:responseObject];
+
+            // Persist User to disk
+            [User setCurrentUser:user];
+
             // Pass User (and no error) to the Completion handler block.
             self.loginCompletion(user, nil);
 
@@ -92,6 +98,16 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
         self.loginCompletion(nil, error);
     }];
 
+}
+
+- (void)homeTimelineWithParams:(NSDictionary *)params completion:(void (^)(NSArray *tweets, NSError *error))completion {
+    [self GET:@"1.1/statuses/home_timeline.json" parameters:params success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        // @todo - should check if response object is actually an array... 26:00 in second movie.
+        NSArray *tweets = [Tweet tweetsWithArray:responseObject];
+        completion(tweets, nil);
+    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+        completion(nil, error);
+    }];
 }
 
 @end
