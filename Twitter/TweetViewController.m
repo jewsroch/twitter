@@ -1,15 +1,15 @@
 //
-//  TweetCell.m
+//  TweetViewController.m
 //  Twitter
 //
-//  Created by Chad Jewsbury on 11/7/15.
+//  Created by Chad Jewsbury on 11/8/15.
 //  Copyright © 2015 Chad Jewsbury. All rights reserved.
 //
 
-#import "TweetCell.h"
+#import "TweetViewController.h"
 #import "UIImageView+AFNetworking.h"
 
-@interface TweetCell ()
+@interface TweetViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *tweetLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *userProfileImage;
@@ -19,17 +19,18 @@
 
 @end
 
-@implementation TweetCell
+@implementation TweetViewController
 
-- (void)awakeFromNib {
-    self.userProfileImage.layer.cornerRadius = 5;
-    self.userProfileImage.clipsToBounds = YES;
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    [self setTweet:self.tweet];
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 - (void)setTweet:(Tweet *)tweet {
@@ -37,8 +38,10 @@
     self.tweetLabel.text = _tweet.text;
     self.userNameLabel.text = _tweet.user.name;
     self.userScreenNameLabel.text = [NSString stringWithFormat:@"@%@",_tweet.user.name];
+    NSLog(@"****URL: %@", _tweet.user.profileImageUrl);
     [self.userProfileImage setImageWithURL:[NSURL URLWithString:_tweet.user.profileImageUrl] placeholderImage:[UIImage imageNamed:@"Twitter"]];
-    
+    self.userProfileImage.layer.cornerRadius = 5;
+    self.userProfileImage.clipsToBounds = YES;
 }
 
 @end

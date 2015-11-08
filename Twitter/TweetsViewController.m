@@ -8,6 +8,8 @@
 
 #import "TweetsViewController.h"
 #import "LoginViewController.h"
+#import "TweetViewController.h"
+#import "CreateViewController.h"
 #import "TwitterClient.h"
 #import "User.h"
 #import "Tweet.h"
@@ -25,7 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.title = @"Home";
+    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Icon-Small-50"]];
 
     [self setupNavigationBar];
     [self setupTableView];
@@ -58,6 +60,13 @@
     TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell"];
     cell.tweet = self.tweets[indexPath.row];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    TweetViewController *vc = [[TweetViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+    vc.tweet = self.tweets[indexPath.row];
 }
 
 - (void)setupTableView {
@@ -112,7 +121,9 @@
 }
 
 - (void)onTweet {
-    NSLog(@"Tweet Tapped");
+    CreateViewController *vc = [[CreateViewController alloc] init];
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
+    [self presentViewController:nvc animated:YES completion:nil];
 }
 
 /*
