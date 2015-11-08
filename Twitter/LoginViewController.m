@@ -9,6 +9,7 @@
 #import "LoginViewController.h"
 #import "TwitterClient.h"
 #import "TweetsViewController.h"
+#import "User.h"
 
 @interface LoginViewController ()
 
@@ -23,7 +24,7 @@
 
             [User currentUser];
 
-            [self presentViewController:[[TweetsViewController alloc] init] animated:YES completion:nil];
+            [self dismissViewControllerAnimated:YES completion:nil];
         } else {
             NSLog(@"Oh No's!: %@", error);
         }
@@ -32,6 +33,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"Login";
+
+    User *user = [User currentUser];
+    if (user != nil) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
     // Do any additional setup after loading the view from its nib.
 }
 

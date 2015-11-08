@@ -15,16 +15,18 @@
     if (self) {
         self.user = [[User alloc] initWithDictionary:dictionary[@"user"]];
         self.text = dictionary[@"text"];
-
-        NSString *createdAtString = dictionary[@"created_at"];
-
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"EEE MMM d HH:mm:ss Z y";
-
-        self.createdAt = [formatter dateFromString:createdAtString];
+        self.createdAt = [self formatDateWithString:dictionary[@"created_at"]];
+        self.retweetsCount = dictionary[@"retweet_count"];
+        self.favoritesCount = dictionary[@"favorites_count"];
     }
 
     return self;
+}
+
+- (NSDate *)formatDateWithString:(NSString *)dateString {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"EEE MMM d HH:mm:ss Z y";
+    return [formatter dateFromString:dateString];
 }
 
 + (NSArray *)tweetsWithArray:(NSArray *)array {

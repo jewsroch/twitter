@@ -54,6 +54,7 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
         NSURL *authURl = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.twitter.com/oauth/authorize?oauth_token=%@", requestToken.token]];
 
         // Open that URL
+        // @TODO Open redirect url in modal window
         [[UIApplication sharedApplication] openURL:authURl];
 
         // After auth, the user will be redirected to cjtwitterapp://oauth which will be handled in the AppDelegate.

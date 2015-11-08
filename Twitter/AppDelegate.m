@@ -26,15 +26,7 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidLogout) name:UserDidLogoutNotification object:nil];
 
-    User *user = [User currentUser];
-    // Check if user is already logged in. Show Tweets if so, Show Login if not.
-    if (user != nil) {
-        self.window.rootViewController = [[TweetsViewController alloc] init];
-        NSLog(@"Welcome %@! Already logged in.", user.name);
-    } else {
-        self.window.rootViewController = [[LoginViewController alloc] init];
-        NSLog(@"Not logged in");
-    }
+    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[TweetsViewController alloc] init]];
 
     [self.window makeKeyAndVisible];
 
@@ -42,7 +34,7 @@
 }
 
 - (void)userDidLogout {
-    self.window.rootViewController = [[LoginViewController alloc] init];
+    [self.window.rootViewController presentViewController:[[LoginViewController alloc] init] animated:YES completion:nil];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
