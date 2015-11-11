@@ -13,7 +13,7 @@
 
 @property (nonatomic, assign) NSInteger tweetId;
 @property (nonatomic, strong) NSString *text;
-@property (nonatomic, strong) NSDate *createdAt;
+@property (nonatomic, strong) NSString *createdAt;
 @property (nonatomic, strong) User *user;
 @property (nonatomic, assign) NSInteger retweetsCount;
 @property (nonatomic, assign) NSInteger favoritesCount;

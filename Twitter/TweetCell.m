@@ -9,6 +9,7 @@
 #import "TweetCell.h"
 #import "CreateViewController.h"
 #import "UIImageView+AFNetworking.h"
+#import "UIColor+TwitterColors.h"
 
 @interface TweetCell ()
 
@@ -19,6 +20,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *createdAtLabel;
 @property (weak, nonatomic) IBOutlet UILabel *retweetCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *favoritesCountLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeStampLabel;
+@property (weak, nonatomic) IBOutlet UIButton *retweetButton;
+@property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
 
 @end
 
@@ -43,6 +47,8 @@
         if (tweet) {
             self.tweet.retweetsCount ++;
             self.retweetCountLabel.text = [@(self.tweet.retweetsCount) stringValue];
+            self.retweetCountLabel.textColor = [UIColor twitterActionButtonOnColor];
+            self.retweetButton.tintColor = [UIColor twitterActionButtonOnColor];
         } else {
             // Already retweeted. Undo retweet.
         }
@@ -54,6 +60,8 @@
         if (tweet) {
             self.tweet.favoritesCount ++;
             self.favoritesCountLabel.text = [@(self.tweet.favoritesCount) stringValue];
+            self.favoritesCountLabel.textColor = [UIColor twitterLikeActionButtonOnColor];
+            self.favoriteButton.tintColor = [UIColor twitterLikeActionButtonOnColor];
         } else {
             // Already favorited...
             // Unfavorite this...
@@ -71,6 +79,17 @@
     [self.userProfileImage setImageWithURL:[NSURL URLWithString:_tweet.user.profileImageUrl] placeholderImage:[UIImage imageNamed:@"Twitter"]];
     self.userProfileImage.layer.cornerRadius = 5;
     self.userProfileImage.clipsToBounds = YES;
+    self.timeStampLabel.text = _tweet.createdAt;
+    NSLog(@"FAVORITED %i", _tweet.favorited);
+    NSLog(@"RETWEETED %i", _tweet.retweeted);
+    if (_tweet.favorited && _tweet.favoritesCount > 0) {
+        self.favoritesCountLabel.textColor = [UIColor twitterLikeActionButtonOnColor];
+        self.favoriteButton.tintColor = [UIColor twitterLikeActionButtonOnColor];
+    }
+    if (_tweet.retweeted && _tweet.retweetsCount > 0) {
+        self.retweetCountLabel.textColor = [UIColor twitterActionButtonOnColor];
+        self.retweetButton.tintColor = [UIColor twitterActionButtonOnColor];
+    }
 }
 
 @end

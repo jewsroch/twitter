@@ -147,8 +147,11 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="createdAtLabel" destination="ANz-Je-ppy" id="gER-f7-ZKp"/>
+                <outlet property="favoriteButton" destination="QSH-LJ-Gue" id="sN3-3U-TV2"/>
                 <outlet property="favoritesCountLabel" destination="7Vu-7F-zHz" id="FW7-Gl-14G"/>
+                <outlet property="retweetButton" destination="W40-lZ-85B" id="ulI-VN-hvO"/>
                 <outlet property="retweetCountLabel" destination="Ann-FK-z5F" id="p4w-is-1CK"/>
+                <outlet property="timeStampLabel" destination="ANz-Je-ppy" id="PHk-xR-aK7"/>
                 <outlet property="tweetLabel" destination="8Ba-CT-6Bm" id="4X2-51-7mu"/>
                 <outlet property="userNameLabel" destination="DSW-UG-OZn" id="9wK-b9-Emv"/>
                 <outlet property="userProfileImage" destination="aiv-7w-vfE" id="cd8-lQ-ebZ"/>

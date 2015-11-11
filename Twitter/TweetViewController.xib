@@ -8,8 +8,11 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TweetViewController">
             <connections>
                 <outlet property="createdAtLabel" destination="Gud-Ce-6DF" id="Dfr-7h-5H1"/>
+                <outlet property="favoriteButton" destination="rID-Ob-uPn" id="9DI-Mp-ohq"/>
                 <outlet property="favoritesCountLabel" destination="aS7-Nq-xKC" id="99l-o6-EZp"/>
+                <outlet property="retweetButton" destination="V1K-Ph-ZdC" id="Vjt-JE-QYn"/>
                 <outlet property="retweetCountLabel" destination="or4-im-pjG" id="FdZ-z8-Eeh"/>
+                <outlet property="timeStampLabel" destination="Gud-Ce-6DF" id="erA-Hg-o2Q"/>
                 <outlet property="tweetLabel" destination="X2O-SZ-kPq" id="pV1-IG-Ae9"/>
                 <outlet property="userNameLabel" destination="gk5-NB-vFI" id="nZJ-6o-Vcx"/>
                 <outlet property="userProfileImage" destination="yYM-8R-Hcw" id="kgx-QO-FBc"/>
