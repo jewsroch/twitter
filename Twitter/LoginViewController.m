@@ -20,10 +20,7 @@
 - (IBAction)onLogin:(id)sender {
     [[TwitterClient sharedInstance] loginWithCompletion:^(User *user, NSError *error) {
         if (user != nil) {
-            NSLog(@"Welcome to %@", user.name);
-
             [User currentUser];
-
             [self dismissViewControllerAnimated:YES completion:nil];
         } else {
             NSLog(@"Oh No's!: %@", error);

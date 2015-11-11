@@ -45,7 +45,8 @@
         [self.tableView insertSubview:self.refreshControl atIndex: 0];
 
     } else {
-        NSLog(@"Not logged in");
+        self.tweets = [NSArray array];
+        [self.tableView reloadData];
         [self showLogin];
     }
 }
@@ -89,11 +90,11 @@
                                                                     action:@selector(onTweet)];
     self.navigationItem.leftBarButtonItem = logoutButton;
     self.navigationItem.rightBarButtonItem = tweet;
-
 }
 
 - (void)fetchTweets {
-    [[TwitterClient sharedInstance] homeTimelineWithParams:nil completion:^(NSArray *tweets, NSError *error) {
+
+    [Tweet homeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
         if (tweets) {
             self.tweets = tweets;
             [self.tableView reloadData];
@@ -103,6 +104,12 @@
             [self.refreshControl endRefreshing];
         }
     }];
+}
+
+- (void)onTweet {
+    CreateViewController *vc = [[CreateViewController alloc] init];
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
+    [self presentViewController:nvc animated:YES completion:nil];
 }
 
 - (void)showLogin {
@@ -120,20 +127,9 @@
     [User logout];
 }
 
-- (void)onTweet {
-    CreateViewController *vc = [[CreateViewController alloc] init];
-    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
-    [self presentViewController:nvc animated:YES completion:nil];
+- (void)viewWillAppear:(BOOL)animated {
+//    [self fetchTweets];
+//    NSLog(@"Refreshing tweets...");
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

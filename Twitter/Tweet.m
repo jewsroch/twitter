@@ -7,6 +7,7 @@
 //
 
 #import "Tweet.h"
+#import "TwitterClient.h"
 
 @implementation Tweet
 
@@ -16,8 +17,11 @@
         self.user = [[User alloc] initWithDictionary:dictionary[@"user"]];
         self.text = dictionary[@"text"];
         self.createdAt = [self formatDateWithString:dictionary[@"created_at"]];
-        self.retweetsCount = dictionary[@"retweet_count"];
-        self.favoritesCount = dictionary[@"favorites_count"];
+        self.retweetsCount = [dictionary[@"retweet_count"] integerValue];
+        self.favoritesCount = [dictionary[@"favorite_count"] integerValue];
+        self.tweetId = [dictionary[@"id"] integerValue];
+        self.favorited = [dictionary[@"favorited"] boolValue];
+        self.retweeted = [dictionary[@"retweeted"] boolValue];
     }
 
     return self;
@@ -29,6 +33,18 @@
     return [formatter dateFromString:dateString];
 }
 
+- (void)rewtweetWithParams:(NSDictionary *)params completion:(void (^)(Tweet *tweet, NSError *error))completion {
+    [[TwitterClient sharedInstance] retweetWithParams:params tweetId:self.tweetId completion:^(Tweet *tweet, NSError *error) {
+        completion(tweet, error);
+    }];
+}
+
+- (void)favoriteTweetWithId:(NSInteger)tweetId completion:(void (^)(Tweet *tweet, NSError *error))completion {
+    [[TwitterClient sharedInstance] favoriteTweetWithId:self.tweetId completion:^(Tweet *tweet, NSError *error) {
+        completion(tweet, error);
+    }];
+}
+
 + (NSArray *)tweetsWithArray:(NSArray *)array {
     NSMutableArray *tweets = [NSMutableArray array];
 
@@ -37,6 +53,19 @@
     }
     
     return tweets;
+}
+
++ (void)homeTimelineWithCompletion:(void (^)(NSArray *tweets, NSError *error))completion {
+    [[TwitterClient sharedInstance] homeTimelineWithParams:nil completion:^(NSArray *responseObject, NSError *error) {
+        completion([self tweetsWithArray:responseObject], error);
+    }];
+}
+
++ (void)updateStatusWithParams:(NSDictionary *)params completion:(void (^)(Tweet *tweet, NSError *error))completion {
+    [[TwitterClient sharedInstance] updateStatusWithParams:params completion:^(NSDictionary *responseObject, NSError *error) {
+        Tweet *tweet = [[Tweet alloc] initWithDictionary:responseObject];
+        completion(tweet, error);
+    }];
 }
 
 @end

@@ -75,11 +75,11 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
         // Step 4: Save Access Token and start making protected requests using it!
         [self.requestSerializer saveAccessToken:accessToken];
 
-
         // Example secured call to get User Data
         // https://dev.twitter.com/rest/reference/get/account/verify_credentials
-        [self GET:@"1.1/account/verify_credentials.json" parameters:nil success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-
+        [self GET:@"1.1/account/verify_credentials.json"
+       parameters:nil
+          success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
             // Create user model from the response
             User *user = [[User alloc] initWithDictionary:responseObject];
 
@@ -102,13 +102,45 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
 }
 
 - (void)homeTimelineWithParams:(NSDictionary *)params completion:(void (^)(NSArray *tweets, NSError *error))completion {
-    [self GET:@"1.1/statuses/home_timeline.json" parameters:params success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+    [self GET:@"1.1/statuses/home_timeline.json"
+   parameters:params
+      success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
         // @todo - should check if response object is actually an array... 26:00 in second movie.
-        NSArray *tweets = [Tweet tweetsWithArray:responseObject];
-        completion(tweets, nil);
+        completion(responseObject, nil);
     } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
         completion(nil, error);
     }];
+}
+
+- (void)updateStatusWithParams:(NSDictionary *)params completion:(void (^)(NSDictionary *responseObject, NSError *error))completion {
+    [self POST:@"1.1/statuses/update.json"
+    parameters:params
+       success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        completion(responseObject, nil);
+    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+        completion(nil, error);
+    }];
+}
+
+- (void)retweetWithParams:(NSDictionary *)params tweetId:(NSInteger)tweetId completion:(void (^)(Tweet *tweet, NSError *error))completion {
+    NSString *url = [NSString stringWithFormat:@"1.1/statuses/retweet/%ld.json", (long)tweetId];
+    [self POST:url
+    parameters:params
+       success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        completion(responseObject, nil);
+    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+        completion(nil, error);
+    }];
+}
+
+- (void)favoriteTweetWithId:(NSInteger)tweetId completion:(void (^)(Tweet *tweet, NSError *error))completion {
+    [self POST:@"1.1/favorites/create.json"
+    parameters:@{@"id":[@(tweetId) stringValue]}
+       success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+           completion(responseObject, nil);
+       } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+           completion(nil, error);
+       }];
 }
 
 @end

@@ -8,6 +8,7 @@
 
 #import "CreateViewController.h"
 #import "UIImageView+AFNetworking.h"
+#import "TwitterClient.h"
 #import "User.h"
 
 @interface CreateViewController ()
@@ -31,8 +32,6 @@
     self.screenNameLabel.text = self.user.screenname;
     [self.textInput becomeFirstResponder];
     [self.profileImage setImageWithURL:[NSURL URLWithString:self.user.profileImageUrl] placeholderImage:[UIImage imageNamed:@"Twitter"]];
-
-    // Do any additional setup after loading the view from its nib.
 }
 
 - (void)didReceiveMemoryWarning {
@@ -42,9 +41,9 @@
 
 - (void)setupNavigationBar {
     UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
-                                                                     style:UIBarButtonItemStylePlain
-                                                                    target:self
-                                                                    action:@selector(onCancel)];
+                                                               style:UIBarButtonItemStylePlain
+                                                              target:self
+                                                              action:@selector(onCancel)];
 
     UIBarButtonItem *tweet = [[UIBarButtonItem alloc] initWithTitle:@"Tweet"
                                                               style:UIBarButtonItemStylePlain
@@ -60,18 +59,21 @@
 }
 
 - (void)onTweet {
-    NSLog(@"user input: %@", self.textInput.text);
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+
+    NSMutableString *status = [self.textInput.text mutableCopy];
+    if (status.length > 140) {
+        status = [[status substringToIndex:140] mutableCopy];
+    }
+
+    [params setValue:status forKey:@"status"];
+    [Tweet updateStatusWithParams:params completion:^(Tweet *tweet, NSError *error) {
+        if (tweet) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        } else {
+            NSLog(@"ERROR!: %@", error);
+        }
+    }];
 }
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
