@@ -9,7 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "Tweet.h"
 
+@protocol TweetCellDelegate <NSObject>
+
+- (void)shouldReplyToTweet:(Tweet *)tweet;
+
+@end
+
+
 @interface TweetCell : UITableViewCell
-@property (weak, nonatomic) Tweet *tweet;
+
+@property (strong, nonatomic) Tweet *tweet;
+@property (weak, nonatomic) id<TweetCellDelegate> delegate;
 
 @end

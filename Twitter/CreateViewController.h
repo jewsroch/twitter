@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "User.h"
+#import "Tweet.h"
 
 @interface CreateViewController : UIViewController
 
 @property (strong, nonatomic) User *user;
+@property (strong, nonatomic) Tweet *retweetTweet;
 
 @end

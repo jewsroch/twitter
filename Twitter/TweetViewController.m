@@ -31,9 +31,13 @@
     [self setTweet:self.tweet];
 }
 
+- (IBAction)onReply:(id)sender {
+    [self.delegate shouldReplyToTweet:self.tweet];
+}
+
 - (IBAction)onRetweet:(id)sender {
     // Move this to trigger a delegate on the Tweet event.
-    [self.tweet rewtweetWithParams:nil completion:^(Tweet *tweet, NSError *error) {
+    [self.tweet retweetWithParams:nil completion:^(Tweet *tweet, NSError *error) {
         if (tweet) {
             self.tweet.retweetsCount ++;
             self.retweetCountLabel.text = [@(self.tweet.retweetsCount) stringValue];

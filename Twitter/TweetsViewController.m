@@ -15,7 +15,8 @@
 #import "Tweet.h"
 #import "TweetCell.h"
 
-@interface TweetsViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface TweetsViewController () <UITableViewDelegate, UITableViewDataSource, TweetCellDelegate, TweetViewControllerDelegate>
+
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *tweets;
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
@@ -59,6 +60,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell"];
+    cell.delegate = self;
     cell.tweet = self.tweets[indexPath.row];
     return cell;
 }
@@ -66,6 +68,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     TweetViewController *vc = [[TweetViewController alloc] init];
+    vc.delegate = self;
     [self.navigationController pushViewController:vc animated:YES];
     vc.tweet = self.tweets[indexPath.row];
 }
@@ -76,6 +79,13 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"TweetCell" bundle:nil] forCellReuseIdentifier:@"TweetCell"];
     self.tableView.estimatedRowHeight = 60;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+}
+
+- (void)shouldReplyToTweet:(Tweet *)tweet {
+    CreateViewController *vc = [[CreateViewController alloc] init];
+    vc.retweetTweet = tweet;
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
+    [self presentViewController:nvc animated:YES completion:nil];
 }
 
 - (void)setupNavigationBar {

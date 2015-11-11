@@ -30,6 +30,11 @@
     self.user = [User currentUser];
     self.nameLabel.text = self.user.name;
     self.screenNameLabel.text = self.user.screenname;
+
+    if (self.retweetTweet) {
+        self.textInput.text = [NSString stringWithFormat:@"@%@", self.retweetTweet.user.screenname];
+    }
+
     [self.textInput becomeFirstResponder];
     [self.profileImage setImageWithURL:[NSURL URLWithString:self.user.profileImageUrl] placeholderImage:[UIImage imageNamed:@"Twitter"]];
 }
@@ -61,12 +66,17 @@
 - (void)onTweet {
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
 
+    if (self.retweetTweet) {
+        params[@"in_reply_to_status_id"] = @(self.retweetTweet.tweetId);
+    }
+
     NSMutableString *status = [self.textInput.text mutableCopy];
     if (status.length > 140) {
         status = [[status substringToIndex:140] mutableCopy];
     }
 
-    [params setValue:status forKey:@"status"];
+    params[@"status"] = status;
+
     [Tweet updateStatusWithParams:params completion:^(Tweet *tweet, NSError *error) {
         if (tweet) {
             [self dismissViewControllerAnimated:YES completion:nil];

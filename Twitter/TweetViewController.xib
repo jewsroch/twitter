@@ -84,6 +84,9 @@
                     </constraints>
                     <color key="tintColor" red="0.62518610860000001" green="0.62518610860000001" blue="0.62518610860000001" alpha="1" colorSpace="calibratedRGB"/>
                     <state key="normal" image="Reply"/>
+                    <connections>
+                        <action selector="onReply:" destination="-1" eventType="touchUpInside" id="Bno-3P-LkR"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rID-Ob-uPn">
                     <rect key="frame" x="213" y="129" width="30" height="30"/>

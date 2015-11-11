@@ -33,7 +33,7 @@
     return [formatter dateFromString:dateString];
 }
 
-- (void)rewtweetWithParams:(NSDictionary *)params completion:(void (^)(Tweet *tweet, NSError *error))completion {
+- (void)retweetWithParams:(NSDictionary *)params completion:(void (^)(Tweet *tweet, NSError *error))completion {
     [[TwitterClient sharedInstance] retweetWithParams:params tweetId:self.tweetId completion:^(Tweet *tweet, NSError *error) {
         completion(tweet, error);
     }];
@@ -62,6 +62,15 @@
 }
 
 + (void)updateStatusWithParams:(NSDictionary *)params completion:(void (^)(Tweet *tweet, NSError *error))completion {
+    [[TwitterClient sharedInstance] updateStatusWithParams:params completion:^(NSDictionary *responseObject, NSError *error) {
+        Tweet *tweet = [[Tweet alloc] initWithDictionary:responseObject];
+        completion(tweet, error);
+    }];
+}
+
++ (void)updateStatusWithReply:(Tweet *)replyTweet params:(NSDictionary *)params completion:(void (^)(Tweet *tweet, NSError *error))completion {
+    [params setValue:@(replyTweet.tweetId) forKey:@"in_reply_to_status_id"];
+
     [[TwitterClient sharedInstance] updateStatusWithParams:params completion:^(NSDictionary *responseObject, NSError *error) {
         Tweet *tweet = [[Tweet alloc] initWithDictionary:responseObject];
         completion(tweet, error);

@@ -21,7 +21,7 @@
 @property (nonatomic, assign) BOOL favorited;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
-- (void)rewtweetWithParams:(NSDictionary *)params completion:(void (^)(Tweet *tweet, NSError *error))completion;
+- (void)retweetWithParams:(NSDictionary *)params completion:(void (^)(Tweet *tweet, NSError *error))completion;
 - (void)favoriteTweetWithId:(NSInteger)tweetId completion:(void (^)(Tweet *tweet, NSError *error))completion;
 
 + (NSArray *)tweetsWithArray:(NSArray *)array;
