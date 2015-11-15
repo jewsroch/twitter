@@ -46,28 +46,51 @@
     [self.tweet retweetWithParams:nil completion:^(Tweet *tweet, NSError *error) {
         if (tweet) {
             self.tweet.retweetsCount ++;
+            self.tweet.retweeted = YES;
             self.retweetCountLabel.text = [@(self.tweet.retweetsCount) stringValue];
-            self.retweetCountLabel.textColor = [UIColor twitterActionButtonOnColor];
-            self.retweetButton.tintColor = [UIColor twitterActionButtonOnColor];
+            [self setRetweetButtonStatus];
         } else {
+            
             // Already retweeted. Undo retweet.
         }
     }];
 }
 
 - (IBAction)onLike:(id)sender {
-    [self.tweet favoriteTweetWithId:self.tweet.tweetId completion:^(Tweet *tweet, NSError *error) {
-        if (tweet) {
-            self.tweet.favoritesCount ++;
-            self.favoritesCountLabel.text = [@(self.tweet.favoritesCount) stringValue];
-            self.favoritesCountLabel.textColor = [UIColor twitterLikeActionButtonOnColor];
-            self.favoriteButton.tintColor = [UIColor twitterLikeActionButtonOnColor];
-        } else {
-            // Already favorited...
-            // Unfavorite this...
-        }
-    }];
+    [self.tweet toggleLikeWithCompletion:nil];
+    [self updateLikes];
 }
+
+- (void)updateLikes {
+    NSString *favoritesCountString = @"0";
+    if (_tweet.favoritesCount > 0) {
+        favoritesCountString = [NSString stringWithFormat:@"%ld", (long)_tweet.favoritesCount];
+    }
+    self.favoritesCountLabel.text = favoritesCountString;
+    [self setFavoriteButtonStatus];
+}
+
+- (void)setFavoriteButtonStatus {
+    if (self.tweet.favorited && self.tweet.favoritesCount > 0) {
+        self.favoritesCountLabel.textColor = [UIColor twitterLikeActionButtonOnColor];
+        self.favoriteButton.tintColor = [UIColor twitterLikeActionButtonOnColor];
+    } else {
+        self.favoritesCountLabel.textColor = [UIColor twitterActionButtonColor];
+        self.favoriteButton.tintColor = [UIColor twitterActionButtonColor];
+    }
+
+}
+
+- (void)setRetweetButtonStatus {
+    if (self.tweet.retweeted && self.tweet.retweetsCount > 0) {
+        self.retweetCountLabel.textColor = [UIColor twitterActionButtonOnColor];
+        self.retweetButton.tintColor = [UIColor twitterActionButtonOnColor];
+    } else {
+        self.retweetCountLabel.textColor = [UIColor twitterActionButtonColor];
+        self.retweetButton.tintColor = [UIColor twitterActionButtonColor];
+    }
+}
+
 
 - (void)setTweet:(Tweet *)tweet {
     _tweet = tweet;
@@ -80,16 +103,8 @@
     self.userProfileImage.layer.cornerRadius = 5;
     self.userProfileImage.clipsToBounds = YES;
     self.timeStampLabel.text = _tweet.createdAt;
-    NSLog(@"FAVORITED %i", _tweet.favorited);
-    NSLog(@"RETWEETED %i", _tweet.retweeted);
-    if (_tweet.favorited && _tweet.favoritesCount > 0) {
-        self.favoritesCountLabel.textColor = [UIColor twitterLikeActionButtonOnColor];
-        self.favoriteButton.tintColor = [UIColor twitterLikeActionButtonOnColor];
-    }
-    if (_tweet.retweeted && _tweet.retweetsCount > 0) {
-        self.retweetCountLabel.textColor = [UIColor twitterActionButtonOnColor];
-        self.retweetButton.tintColor = [UIColor twitterActionButtonOnColor];
-    }
+    [self setFavoriteButtonStatus];
+    [self setRetweetButtonStatus];
 }
 
 @end

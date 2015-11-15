@@ -24,6 +24,8 @@
 - (void)retweetWithParams:(NSDictionary *)params tweetId:(NSInteger)tweetId
                completion:(void (^)(Tweet *tweet, NSError *error))completion;
 - (void)favoriteTweetWithId:(NSInteger)tweetId
-                 completion:(void (^)(Tweet *tweet, NSError *error))completion;
+               errorHandler:(void (^)(NSArray *responseObject, NSError *error))errorHandler;
+- (void)deleteFavoriteTweetWithId:(NSInteger)tweetId
+                     errorHandler:(void (^)(NSArray *responseObject, NSError *error))errorHandler;
 
 @end

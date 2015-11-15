@@ -133,13 +133,25 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
     }];
 }
 
-- (void)favoriteTweetWithId:(NSInteger)tweetId completion:(void (^)(Tweet *tweet, NSError *error))completion {
+- (void)favoriteTweetWithId:(NSInteger)tweetId errorHandler:(void (^)(NSArray *responseObject, NSError *error))errorHandler {
     [self POST:@"1.1/favorites/create.json"
     parameters:@{@"id":[@(tweetId) stringValue]}
-       success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-           completion(responseObject, nil);
-       } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
-           completion(nil, error);
+       success:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+           NSLog(@"Favorited Tweet");
+       }
+       failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+           errorHandler(nil, error);
+       }];
+}
+
+- (void)deleteFavoriteTweetWithId:(NSInteger)tweetId errorHandler:(void (^)(NSArray *responseObject, NSError *error))errorHandler {
+    [self POST:@"/1.1/favorites/destroy.json"
+    parameters:@{@"id":[@(tweetId) stringValue]}
+       success:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+           NSLog(@"UnFavorited Tweet");
+       }
+       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+           errorHandler(nil, error);
        }];
 }
 

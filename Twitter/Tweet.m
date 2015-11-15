@@ -72,11 +72,38 @@
     }];
 }
 
-- (void)favoriteTweetWithId:(NSInteger)tweetId completion:(void (^)(Tweet *tweet, NSError *error))completion {
-    [[TwitterClient sharedInstance] favoriteTweetWithId:self.tweetId completion:^(Tweet *tweet, NSError *error) {
-        completion(tweet, error);
-    }];
+- (void)toggleLikeWithCompletion:(void (^)(Tweet *tweets, NSError *error))completion {
+    if (self.favorited) {
+        [[TwitterClient sharedInstance] deleteFavoriteTweetWithId:self.tweetId errorHandler:^(NSArray *responseObject, NSError *error) {
+            if (!error) {
+                NSLog(@"deleted like!");
+            }
+            completion(nil, error);
+        }];
+
+        [self unlike];
+    } else {
+        [[TwitterClient sharedInstance] favoriteTweetWithId:self.tweetId errorHandler:^(NSArray *responseObject, NSError *error) {
+            if (!error) {
+                NSLog(@"liked Tweet!");
+            }
+            completion(nil, error);
+        }];
+
+        [self like];
+    }
 }
+
+- (void)like {
+    self.favorited = YES;
+    self.favoritesCount ++;
+}
+
+- (void)unlike {
+    self.favorited = NO;
+    self.favoritesCount --;
+}
+
 
 + (NSArray *)tweetsWithArray:(NSArray *)array {
     NSMutableArray *tweets = [NSMutableArray array];
