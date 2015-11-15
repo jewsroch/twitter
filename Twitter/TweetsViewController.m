@@ -93,10 +93,9 @@
 }
 
 - (void)setupNavigationBar {
-    UIBarButtonItem *logoutButton = [[UIBarButtonItem alloc] initWithTitle:@"Logout"
+    UIBarButtonItem *logoutButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu"]
                                                                      style:UIBarButtonItemStylePlain
-                                                                    target:self
-                                                                    action:@selector(onLogout)];
+                                                                    target:self action:@selector(onMenu)];
 
     UIBarButtonItem *tweet = [[UIBarButtonItem alloc] initWithTitle:@"Tweet"
                                                                      style:UIBarButtonItemStylePlain
@@ -118,6 +117,10 @@
             [self.refreshControl endRefreshing];
         }
     }];
+}
+
+- (void)onMenu {
+    // Open Menu
 }
 
 - (void)onTweet {
