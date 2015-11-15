@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController">
+            <connections>
+                <outlet property="contentView" destination="GzG-0a-DqG" id="WSa-3L-oHL"/>
+                <outlet property="leftMarginConstraint" destination="2gU-NK-tHZ" id="47h-BE-Uz0"/>
+                <outlet property="menuView" destination="Jb8-MK-zu1" id="wf5-Rn-p4L"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jb8-MK-zu1">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GzG-0a-DqG">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <color key="backgroundColor" red="0.97838648160298669" green="0.22615978404017636" blue="0.20728316568542648" alpha="0.14999999999999999" colorSpace="calibratedRGB"/>
+                    <gestureRecognizers/>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="TAl-GL-BVv" appends="YES" id="K04-lv-h3z"/>
+                    </connections>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="GzG-0a-DqG" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="1or-2M-fy2"/>
+                <constraint firstItem="GzG-0a-DqG" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="2gU-NK-tHZ"/>
+                <constraint firstAttribute="trailing" secondItem="Jb8-MK-zu1" secondAttribute="trailing" id="4DX-o3-1If"/>
+                <constraint firstItem="Jb8-MK-zu1" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="8ZY-bv-7vB"/>
+                <constraint firstAttribute="bottom" secondItem="Jb8-MK-zu1" secondAttribute="bottom" id="hdE-mv-bfr"/>
+                <constraint firstItem="GzG-0a-DqG" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="jzE-su-HMR"/>
+                <constraint firstItem="Jb8-MK-zu1" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="ruc-1A-6Ut"/>
+                <constraint firstItem="Jb8-MK-zu1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="xA4-BO-Nln"/>
+                <constraint firstAttribute="bottom" secondItem="GzG-0a-DqG" secondAttribute="bottom" id="y21-Rl-9Hw"/>
+            </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="ruc-1A-6Ut"/>
+                </mask>
+            </variation>
+        </view>
+        <panGestureRecognizer minimumNumberOfTouches="1" id="TAl-GL-BVv">
+            <connections>
+                <action selector="onPanGesture:" destination="-1" id="Nd1-vu-eHe"/>
+            </connections>
+        </panGestureRecognizer>
+    </objects>
+</document>

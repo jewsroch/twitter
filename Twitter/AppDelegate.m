@@ -12,6 +12,8 @@
 #import "User.h"
 #import "Tweet.h"
 #import "TweetsViewController.h"
+#import "MainViewController.h"
+#import "MenuViewController.h"
 
 @interface AppDelegate ()
 
@@ -25,8 +27,9 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidLogout) name:UserDidLogoutNotification object:nil];
+    MainViewController *vc = [[MainViewController alloc] init];
 
-    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[TweetsViewController alloc] init]];
+    self.window.rootViewController = vc;
 
     [self.window makeKeyAndVisible];
 
