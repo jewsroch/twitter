@@ -115,8 +115,8 @@
     return tweets;
 }
 
-+ (void)homeTimelineWithCompletion:(void (^)(NSArray *tweets, NSError *error))completion {
-    [[TwitterClient sharedInstance] homeTimelineWithParams:nil completion:^(NSArray *responseObject, NSError *error) {
++ (void)homeTimelineWithCompletion:(BOOL)isMentions completion:(void (^)(NSArray *tweets, NSError *error))completion {
+    [[TwitterClient sharedInstance] homeTimelineWithParams:isMentions params:nil completion:^(NSArray *responseObject, NSError *error) {
         completion([self tweetsWithArray:responseObject], error);
     }];
 }

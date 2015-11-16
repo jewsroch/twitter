@@ -25,7 +25,7 @@
 - (void)toggleLikeWithCompletion:(void (^)(Tweet *tweet, NSError *error))completion;
 
 + (NSArray *)tweetsWithArray:(NSArray *)array;
-+ (void)homeTimelineWithCompletion:(void (^)(NSArray *tweets, NSError *error))completion;
++ (void)homeTimelineWithCompletion:(BOOL)isMentions completion:(void (^)(NSArray *tweets, NSError *error))completion;
 + (void)updateStatusWithParams:(NSDictionary *)params completion:(void (^)(Tweet *tweet, NSError *error))completion;
 
 @end

@@ -101,8 +101,9 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
 
 }
 
-- (void)homeTimelineWithParams:(NSDictionary *)params completion:(void (^)(NSArray *tweets, NSError *error))completion {
-    [self GET:@"1.1/statuses/home_timeline.json"
+- (void)homeTimelineWithParams:(BOOL)isMentions params:(NSDictionary *)params completion:(void (^)(NSArray *tweets, NSError *error))completion {
+    NSString *url = isMentions ? @"1.1/statuses/mentions_timeline.json" : @"1.1/statuses/home_timeline.json";
+    [self GET:url
    parameters:params
       success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
         // @todo - should check if response object is actually an array... 26:00 in second movie.

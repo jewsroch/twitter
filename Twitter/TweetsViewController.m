@@ -102,12 +102,15 @@
                                                                     target:self
                                                                     action:@selector(onTweet)];
     self.navigationItem.leftBarButtonItem = logoutButton;
+
+//    [self.navigationItem.leftBarButtonItem setTarget:self.menuNavitationController]
+//    [self.navigationItem.leftBarButtonItem setAction:@selector(//action name)]
     self.navigationItem.rightBarButtonItem = tweet;
 }
 
 - (void)fetchTweets {
 
-    [Tweet homeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
+    [Tweet homeTimelineWithCompletion:NO completion:^(NSArray *tweets, NSError *error) {
         if (tweets) {
             self.tweets = tweets;
             [self.tableView reloadData];
