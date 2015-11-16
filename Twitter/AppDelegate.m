@@ -27,9 +27,17 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidLogout) name:UserDidLogoutNotification object:nil];
-    MainViewController *vc = [[MainViewController alloc] init];
 
-    self.window.rootViewController = vc;
+    MainViewController *mainVC = [[MainViewController alloc] init];
+    MenuViewController *menuVC = [[MenuViewController alloc] init];
+    menuVC.mainViewController = mainVC;
+
+    UINavigationController *menuNVC = [[UINavigationController alloc] init];
+    [menuNVC setViewControllers:[NSArray arrayWithObject:menuVC]];
+
+    mainVC.menuViewController = menuNVC;
+
+    self.window.rootViewController = mainVC;
 
     [self.window makeKeyAndVisible];
 

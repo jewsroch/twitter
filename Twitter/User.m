@@ -30,6 +30,7 @@ NSString * const UserDidLogoutNotification = @"UserDidLogoutNotification";
         self.screenname = dictionary[@"screen_name"];
         self.tagline = dictionary[@"description"];
         self.profileImageUrl = dictionary[@"profile_image_url"];
+        self.backgroundImageUrl = dictionary[@"profile_banner_url"];
     }
 
     return self;

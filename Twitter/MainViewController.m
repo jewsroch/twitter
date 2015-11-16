@@ -20,21 +20,42 @@
 
 @implementation MainViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.menuViewController.view.frame = self.menuView.bounds;
+    self.contentViewController.view.frame = self.contentView.bounds;
+//    [self.menuView addSubview:self.menuViewController.view];
 
-    self.menuViewController = [[MenuViewController alloc] init];
-    self.tweetsViewController = [[UINavigationController alloc] initWithRootViewController:[[TweetsViewController alloc] init]];
+//    self.tweetsViewController = [[UINavigationController alloc] initWithRootViewController:[[TweetsViewController alloc] init]];
+//    self.tweetsViewController.view.frame = self.contentView.frame;
+//    [self.contentView addSubview:self.tweetsViewController.view];
 
-    [self.menuView addSubview:self.menuViewController.view];
 
-    self.tweetsViewController.view.frame = self.contentView.frame;
-    [self.contentView addSubview:self.tweetsViewController.view];
+
+
+
+
+
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)setMenuViewController:(UINavigationController *)menuViewController {
+    _menuViewController = menuViewController;
+
+    [self.view layoutIfNeeded];
+    [self.menuView addSubview:menuViewController.view];
+}
+
+- (void)setContentViewController:(UINavigationController *)contentViewController {
+    _contentViewController = contentViewController;
+
+    [self.view layoutIfNeeded];
+    [self.contentView addSubview:contentViewController.view];
+    [self close];
 }
 
 - (IBAction)onPanGesture:(UIPanGestureRecognizer *)sender {
@@ -46,15 +67,27 @@
         self.leftMarginConstraint.constant = self.originalLeftMargin + translation.x;
     } else if (sender.state == UIGestureRecognizerStateEnded) {
 
-        [UIView animateWithDuration:0.3 animations:^{
-            if (velocity.x > 0) {
-                self.leftMarginConstraint.constant = self.view.frame.size.width - 100;
-            } else {
-                self.leftMarginConstraint.constant = 0;
-            }
-            [self.view layoutIfNeeded];
-        }];
+        if (velocity.x > 0) {
+            [self open];
+        } else {
+            [self close];
+        }
+        [self.view layoutIfNeeded];
     }
+}
+
+- (void)open {
+    [UIView animateWithDuration:.3 animations:^{
+        self.leftMarginConstraint.constant = self.view.frame.size.width - 100;
+        [self.view layoutIfNeeded];
+    }];
+}
+
+- (void)close {
+    [UIView animateWithDuration:.3 animations:^{
+        self.leftMarginConstraint.constant = 0;
+        [self.view layoutIfNeeded];
+    }];
 }
 
 /*

@@ -11,6 +11,7 @@
 #import "TweetsViewController.h"
 #import "ProfileViewController.h"
 #import "MenuCell.h"
+#import "User.h"
 
 @interface MenuViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -40,6 +41,7 @@
     self.nvcMentions = [[UINavigationController alloc] initWithRootViewController:mvc];
 
     ProfileViewController *pvc = [[ProfileViewController alloc] init];
+    pvc.user = [User currentUser];
     self.nvcProfile = [[UINavigationController alloc] initWithRootViewController:pvc];
 
     self.menuViewControllers = @[self.nvcHome, self.nvcProfile, self.nvcMentions];
@@ -64,8 +66,13 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    MainViewController *mvc = (MainViewController *)self.mainViewController;
-    mvc.contentViewController = self.menuViewControllers[indexPath.row];
+    if (indexPath.row == 3) {
+        [User logout];
+    } else {
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+        MainViewController *mvc = (MainViewController *)self.mainViewController;
+        mvc.contentViewController = self.menuViewControllers[indexPath.row];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

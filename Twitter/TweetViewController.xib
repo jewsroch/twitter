@@ -166,12 +166,6 @@
             </variation>
             <point key="canvasLocation" x="373" y="322"/>
         </view>
-        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="3OP-ex-ofr">
-            <rect key="frame" x="0.0" y="0.0" width="46" height="32"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <state key="normal" title="Button"/>
-            <point key="canvasLocation" x="763" y="294"/>
-        </button>
     </objects>
     <resources>
         <image name="Like" width="20" height="20"/>

@@ -23,6 +23,7 @@
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aiv-7w-vfE">
                         <rect key="frame" x="16" y="16" width="48" height="48"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="height" constant="48" id="6zp-PU-n5u"/>
                             <constraint firstAttribute="width" constant="48" id="8X3-RC-xMc"/>

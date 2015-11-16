@@ -18,10 +18,11 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rc6-Sd-NOa">
                         <rect key="frame" x="8" y="17" width="64" height="28"/>
                         <fontDescription key="fontDescription" type="system" pointSize="26"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <color key="backgroundColor" red="0.16078431900000001" green="0.50196081400000003" blue="0.7254902124" alpha="1" colorSpace="deviceRGB"/>
                 <constraints>
                     <constraint firstItem="rc6-Sd-NOa" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="A4E-Xv-5sx"/>
                     <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="rc6-Sd-NOa" secondAttribute="bottom" constant="8" id="Maz-Xr-Lji"/>

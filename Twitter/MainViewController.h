@@ -10,7 +10,10 @@
 
 @interface MainViewController : UIViewController
 
-@property (nonatomic, strong) UIViewController *menuViewController;
-@property (nonatomic, strong) UIViewController *contentViewController;
+@property (nonatomic, strong) UINavigationController *menuViewController;
+@property (nonatomic, strong) UINavigationController *contentViewController;
+
+- (void)open;
+- (void)close;
 
 @end

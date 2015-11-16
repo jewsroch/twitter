@@ -14,6 +14,7 @@
 #import "User.h"
 #import "Tweet.h"
 #import "TweetCell.h"
+#import "ProfileViewController.h"
 
 @interface TweetsViewController () <UITableViewDelegate, UITableViewDataSource, TweetCellDelegate, TweetViewControllerDelegate>
 
@@ -63,7 +64,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell"];
+    TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tweetCell"];
     cell.delegate = self;
     cell.tweet = self.tweets[indexPath.row];
     return cell;
@@ -80,7 +81,7 @@
 - (void)setupTableView {
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    [self.tableView registerNib:[UINib nibWithNibName:@"TweetCell" bundle:nil] forCellReuseIdentifier:@"TweetCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"TweetCell" bundle:nil] forCellReuseIdentifier:@"tweetCell"];
     self.tableView.estimatedRowHeight = 60;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
@@ -90,6 +91,12 @@
     vc.retweetTweet = tweet;
     UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nvc animated:YES completion:nil];
+}
+
+- (void)shouldShowProfile:(User *)user {
+    ProfileViewController *vc = [[ProfileViewController alloc] init];
+    vc.user = user;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)setupNavigationBar {
@@ -110,7 +117,7 @@
 
 - (void)fetchTweets {
 
-    [Tweet homeTimelineWithCompletion:NO completion:^(NSArray *tweets, NSError *error) {
+    [Tweet homeTimelineWithCompletion:self.isMentions completion:^(NSArray *tweets, NSError *error) {
         if (tweets) {
             self.tweets = tweets;
             [self.tableView reloadData];

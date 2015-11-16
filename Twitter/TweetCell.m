@@ -10,6 +10,7 @@
 #import "CreateViewController.h"
 #import "UIImageView+AFNetworking.h"
 #import "UIColor+TwitterColors.h"
+#import "ProfileViewController.h"
 
 @interface TweetCell ()
 
@@ -30,6 +31,14 @@
 
 - (void)awakeFromNib {
 
+}
+
+- (IBAction)onProfileImageTap:(UITapGestureRecognizer *)sender {
+    ProfileViewController *vc = [[ProfileViewController alloc] init];
+    vc.user = self.tweet.user;
+
+    [self.delegate shouldShowProfile:self.tweet.user];
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
