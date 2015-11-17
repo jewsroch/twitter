@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface MenuCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIImageView *iconImage;
 @property (weak, nonatomic) IBOutlet UILabel *menuLabel;
 
 @end

@@ -78,6 +78,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MenuCell *cell = [tableView dequeueReusableCellWithIdentifier:@"menuCell"];
     cell.menuLabel.text = @[@"Home", @"Profile", @"Mentions", @"Sign Out"][indexPath.row];
+
+    [cell.iconImage setImage: @[[UIImage imageNamed:@"home"],
+                                [UIImage imageNamed:@"profile"],
+                                [UIImage imageNamed:@"mention"],
+                                [UIImage imageNamed:@"logout"]
+                                ][indexPath.row] ];
+    [cell.iconImage setTintColor:[UIColor whiteColor]];
+
     return cell;
 }
 /*

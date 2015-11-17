@@ -24,18 +24,6 @@
     [super viewWillAppear:animated];
     self.menuViewController.view.frame = self.menuView.bounds;
     self.contentViewController.view.frame = self.contentView.bounds;
-//    [self.menuView addSubview:self.menuViewController.view];
-
-//    self.tweetsViewController = [[UINavigationController alloc] initWithRootViewController:[[TweetsViewController alloc] init]];
-//    self.tweetsViewController.view.frame = self.contentView.frame;
-//    [self.contentView addSubview:self.tweetsViewController.view];
-
-
-
-
-
-
-
 }
 
 - (void)didReceiveMemoryWarning {
@@ -78,7 +66,7 @@
 
 - (void)open {
     [UIView animateWithDuration:.3 animations:^{
-        self.leftMarginConstraint.constant = self.view.frame.size.width - 100;
+        self.leftMarginConstraint.constant = self.view.frame.size.width - 80;
         [self.view layoutIfNeeded];
     }];
 }

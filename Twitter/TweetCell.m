@@ -30,15 +30,17 @@
 @implementation TweetCell
 
 - (void)awakeFromNib {
-
+    // http://stackoverflow.com/questions/19124922/uicollectionview-adding-single-tap-gesture-recognizer-to-supplementary-view
+    self.userProfileImage.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onProfileImageTap:)];
+    tgr.delegate = self;
+    [self.userProfileImage addGestureRecognizer:tgr];
 }
 
-- (IBAction)onProfileImageTap:(UITapGestureRecognizer *)sender {
+- (void)onProfileImageTap:(UITapGestureRecognizer *)sender {
     ProfileViewController *vc = [[ProfileViewController alloc] init];
     vc.user = self.tweet.user;
-
     [self.delegate shouldShowProfile:self.tweet.user];
-    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -17,11 +17,17 @@
 @property (weak, nonatomic) IBOutlet UILabel *screenNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *taglineLabel;
 @property (weak, nonatomic) IBOutlet UILabel *followingCountLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *followersCountLabel;
+@property (weak, nonatomic) IBOutlet UILabel *followersCountLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *verifiedImage;
+@property (weak, nonatomic) IBOutlet UILabel *locationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *urlLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *locationImage;
+@property (weak, nonatomic) IBOutlet UIImageView *urlImage;
 
 @end
 
 @implementation ProfileViewController
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -40,7 +46,42 @@
     self.nameLabel.text = self.user.name;
     self.screenNameLabel.text = self.user.screenname;
     self.taglineLabel.text = self.user.tagline;
+    self.followingCountLabel.text = [self formatCount:self.user.followingCount];
+    self.followersCountLabel.text = [self formatCount:self.user.followersCount];
+
+    if (![self.user.location isEqual:[NSNull null]]) {
+        self.locationLabel.text = self.user.location;
+        self.locationLabel.hidden = NO;
+        self.locationImage.hidden = NO;
+    }
+
+    if (![self.user.url isEqual:[NSNull null]]) {
+        self.urlLabel.text = self.user.url;
+        self.urlLabel.hidden = NO;
+        self.urlImage.hidden = NO;
+    }
+
+    if (!self.user.verified) {
+        self.verifiedImage.hidden = YES;
+    }
 }
+
+- (IBAction)onUrlTap:(UITapGestureRecognizer *)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.user.url]];
+}
+
+- (NSString *)formatCount:(NSNumber *)count {
+    NSString *formatted;
+    if ([count integerValue] > 1000000) {
+        formatted = [NSString stringWithFormat:@"%.1fM", [count floatValue]/1000000];
+    } else if ([count integerValue] > 1000) {
+        formatted = [NSString stringWithFormat:@"%.1fK", [count floatValue]/1000];
+    } else {
+        formatted = [NSString stringWithFormat:@"%@", count];
+    }
+    return formatted;
+}
+
 
 
 - (void)didReceiveMemoryWarning {

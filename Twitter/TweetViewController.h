@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "Tweet.h"
+#import "User.h"
 
 @protocol TweetViewControllerDelegate <NSObject>
 
 - (void)shouldReplyToTweet:(Tweet *)tweet;
+- (void)shouldShowProfile:(User *)user;
 
 @end
 

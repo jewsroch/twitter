@@ -31,6 +31,11 @@ NSString * const UserDidLogoutNotification = @"UserDidLogoutNotification";
         self.tagline = dictionary[@"description"];
         self.profileImageUrl = dictionary[@"profile_image_url"];
         self.backgroundImageUrl = dictionary[@"profile_banner_url"];
+        self.followersCount = dictionary[@"followers_count"];
+        self.followingCount = dictionary[@"friends_count"];
+        self.location = dictionary[@"location"] ? dictionary[@"location"] : nil;
+        self.url = dictionary[@"url"] ? dictionary[@"url"] : nil;
+        self.verified = dictionary[@"verified"];
     }
 
     return self;
@@ -39,7 +44,6 @@ NSString * const UserDidLogoutNotification = @"UserDidLogoutNotification";
 static User *_currentUser = nil;
 
 NSString *const kCurrentUserKey = @"kCurrentUserKey";
-
 
 + (User *)currentUser {
     // After cold start, or if not logged in...
